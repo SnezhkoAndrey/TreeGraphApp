@@ -1,0 +1,31 @@
+.button {
+  margin: 0;
+}
+
+.valueButton {
+  padding: 2px 5px;
+}
+
+.categoryName {
+  display: flex;
+  gap: 10px;
+}
+
+.category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 10px;
+
+  .title {
+    margin: 0;
+    padding: 5px 10px;
+    border: 1px solid #000;
+  }
+}
+
+.subCategoryList {
+  display: flex;
+  justify-content: center;
+}
