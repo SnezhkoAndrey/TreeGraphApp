@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import "./Category.scss";
 
 interface PropsType {
@@ -11,7 +11,7 @@ const Category = ({ id, removeCategory }: PropsType) => {
   const [categoryName, setCategoryName] = useState(true);
   const [value, setValue] = useState("");
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: FormEvent<HTMLInputElement>) => {
     setValue(event.currentTarget.value);
   };
 
