@@ -1,105 +1,81 @@
-import { FormEvent, useEffect, useState } from "react";
 import "./CategoriesMain.scss";
-import useCategories, { CategoryType } from "../../hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
+import Category from "../../components/Category";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useDraggable } from "../../hooks/useDraggble";
 
 const CategoriesMain = () => {
+  const handleDrag = useCallback(
+    ({ x, y }: { x: number; y: number }) => ({
+      x: Math.max(-1000, x),
+      y: Math.max(0, y),
+    }),
+    []
+  );
+
+  const [ref] = useDraggable({
+    onDrag: handleDrag,
+  });
+
+  //-------------------
+
+  const [zoom, setZoom] = useState(1);
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.transform = `scale(${zoom})`;
+      containerRef.current.style.transformOrigin = "top left";
+    }
+  }, [zoom]);
+
+  const handleZoomIn = () => {
+    setZoom((prevZoom) => prevZoom + 0.1);
+  };
+
+  const handleZoomOut = () => {
+    setZoom((prevZoom) => Math.max(prevZoom - 0.1, 0.1));
+  };
+
+  // const handleZoom = (event: WheelEvent) => {
+  //   event.preventDefault();
+
+  //   const zoomFactor = event.deltaY > 0 ? 0.1 : -0.1;
+  //   setZoom((prevZoom) => Math.max(prevZoom + zoomFactor, 0.1));
+  // };
+
+  // useEffect(() => {
+  //   if (containerRef.current) {
+  //     containerRef.current.addEventListener("wheel", handleZoom);
+
+  //     return () => {
+  //       containerRef.current?.removeEventListener("wheel", handleZoom);
+  //     };
+  //   }
+  // }, []);
+
+  //--------------
+
   const { addCategory, categoryGraph, editCategory, removeCategory } =
     useCategories();
 
+  if (!categoryGraph.length) return null;
+
   return (
-    <div className="subCategoryList">
-      <SubCategory
-        items={categoryGraph}
-        addCategory={addCategory}
-        parentId={null}
-        editCategory={editCategory}
-        removeCategory={removeCategory}
-      />
+    <div ref={containerRef}>
+      <div className="categoryMain" ref={ref}>
+        <button onClick={handleZoomIn}>Zoom In</button>
+        <button onClick={handleZoomOut}>Zoom Out</button>
+        <Category
+          addCategory={addCategory}
+          editCategory={editCategory}
+          removeCategory={removeCategory}
+          isInputView={true}
+          {...categoryGraph[0]}
+        />
+      </div>
     </div>
-  );
-};
-
-type PropsType = {
-  items: CategoryType[];
-  parentId: number | null;
-  addCategory: any;
-  editCategory: any;
-  removeCategory: any;
-};
-
-const SubCategory = ({
-  items,
-  addCategory,
-  parentId,
-  editCategory,
-  removeCategory,
-}: PropsType) => {
-  const [value, setValue] = useState("");
-  const [isEdit, setIsEdit] = useState(true);
-  const [categories, setCategories] = useState(items);
-
-  useEffect(() => {
-    setCategories(items);
-  }, [items]);
-
-  const handleChange = (e: FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value);
-  };
-
-  const handleAddNewCategory = () => {
-    const newCategory = categories.map((c) => {
-      return {
-        ...c,
-        nodes: [
-          ...c.nodes,
-          {
-            id: Math.random(),
-            childrenIds: [],
-            name: "",
-            nodes: [],
-            parentId: c.id,
-          },
-        ],
-      };
-    });
-    setCategories(newCategory);
-  };
-
-  console.log(categories);
-  console.log("parentId :>> ", parentId);
-
-  return isEdit ? (
-    <div>
-      <input autoFocus type="text" onChange={handleChange} />
-      <button
-        onClick={() => {
-          addCategory(value, parentId);
-          setIsEdit(false);
-        }}
-      >
-        save
-      </button>
-    </div>
-  ) : (
-    <>
-      {categories.map((n) => (
-        <div key={n.id}>
-          <h3>{n.name}</h3>
-          <button onClick={handleAddNewCategory}>+</button>
-          <button onClick={() => removeCategory(n.id)}>-</button>
-          {/* <button onClick={()=>editCategory()}>/</button> */}
-          {n.nodes && n.nodes.length ? (
-            <SubCategory
-              items={n.nodes}
-              parentId={n.id}
-              addCategory={addCategory}
-              editCategory={editCategory}
-              removeCategory={removeCategory}
-            />
-          ) : null}
-        </div>
-      ))}
-    </>
   );
 };
 

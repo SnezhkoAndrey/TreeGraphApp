@@ -1,71 +1,74 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import { CategoryType } from "../../types/CategoryType";
+import InputSave from "../InputSave";
+import SubCategory from "../SubCategory";
 import "./Category.scss";
 
-interface PropsType {
-  id: number;
+interface PropsType extends CategoryType {
+  addCategory: (name: string, id: number) => void;
+  editCategory: (value: string, id: number) => void;
   removeCategory: (id: number) => void;
+  isInputView: boolean;
+  removeView?: (isView: boolean) => void;
 }
 
-const Category = ({ id, removeCategory }: PropsType) => {
-  const [categoryList, setCategoryList] = useState([] as any);
-  const [categoryName, setCategoryName] = useState(true);
-  const [value, setValue] = useState("");
+const Category = ({
+  name,
+  id,
+  nodes,
+  addCategory,
+  editCategory,
+  removeCategory,
+  isInputView,
+  removeView,
+}: PropsType) => {
+  const [view, setView] = useState(false);
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
-    setValue(event.currentTarget.value);
+  const viewCategory = (isView: boolean) => {
+    setView(isView);
   };
 
-  const removeSubcategory = (id: number) => {
-    setCategoryList([...categoryList.filter((cat: any) => cat.id !== id)]);
-  };
-
-  const addCategory = () => {
-    setCategoryList(
-      categoryList.concat(
-        <Category
-          key={Math.random()}
-          id={Math.random()}
-          removeCategory={removeSubcategory}
-        />
-      )
+  if (!name && isInputView)
+    return (
+      <InputSave
+        onSave={(value) => {
+          addCategory(value, id);
+          removeView && removeView(false);
+        }}
+        defaultValue={name}
+        id={id}
+        remove={() => removeView && removeView(false)}
+      />
     );
-  };
 
-  const deleteCategory = () => {
-    removeCategory(id);
-  };
-
-  return categoryName ? (
-    <div className="categoryName">
-      <input autoFocus type="text" value={value} onChange={handleChange} />
-      <button className="button">
-        <div className="valueButton" onClick={() => setCategoryName(false)}>
-          +
+  return (
+    <div className="category">
+      {name ? (
+        <div className={"item"}>
+          <SubCategory
+            name={name}
+            id={id}
+            removeCategory={removeCategory}
+            editCategory={editCategory}
+            viewCategory={viewCategory}
+          />
+          {!!nodes.length && (
+            <div className="categoryList">
+              {nodes.map((c) => (
+                <Category
+                  key={c.id}
+                  {...c}
+                  addCategory={addCategory}
+                  editCategory={editCategory}
+                  removeCategory={removeCategory}
+                  isInputView={view}
+                  removeView={viewCategory}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      </button>
-      <button className="button">
-        <div className="valueButton" onClick={deleteCategory}>
-          x
-        </div>
-      </button>
-    </div>
-  ) : (
-    <div>
-      <div className="category">
-        <div className="title">{value ? value : "Category"}</div>
-        <button className="button" onClick={addCategory}>
-          <div className="valueButton">+</div>
-        </button>
-        <button className="button" onClick={() => setCategoryName(true)}>
-          <div className="valueButton">/</div>
-        </button>
-        <button className="button">
-          <div className="valueButton" onClick={deleteCategory}>
-            x
-          </div>
-        </button>
-      </div>
-      <div className="subCategoryList">{categoryList}</div>
+      ) : null}
     </div>
   );
 };
