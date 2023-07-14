@@ -40,6 +40,9 @@
 
     &.add {
       background-color: #4ec764bc;
+      &:disabled {
+        background-color: #858585d0;
+      }
     }
 
     &.delete {

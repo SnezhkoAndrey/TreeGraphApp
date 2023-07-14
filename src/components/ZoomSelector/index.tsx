@@ -28,7 +28,7 @@ const ZoomSelector = ({ changeSelectorZoom, zoom }: PropsType) => {
             {ZOOM_BUTTON.map((but) => (
               <button
                 key={but}
-                className="item"
+                className={zoom === but ? "item active" : "item"}
                 onClick={() => changeSelectorZoom(but)}
               >{`${but * 100}%`}</button>
             ))}
