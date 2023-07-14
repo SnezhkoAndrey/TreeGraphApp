@@ -5,6 +5,7 @@
     #b5b5b597;
   background-size: 10px, 100%;
   z-index: 15;
+  cursor: url("../../assets/hoverCursor.svg"), pointer;
 
   &.up {
     top: -7px;

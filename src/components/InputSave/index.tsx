@@ -26,8 +26,6 @@ const InputSave = ({
 
   return (
     <div className="inputSave">
-      {/* <div className="inputContainer">
-        <div className="label">My name is</div> */}
       <input
         className="input"
         autoFocus
@@ -36,7 +34,6 @@ const InputSave = ({
         value={value}
         placeholder="Category name"
       />
-      {/* </div> */}
       <button className="button add" onClick={handleClick} disabled={!value}>
         <img className="logoButton" src={Done} alt="done" />
       </button>

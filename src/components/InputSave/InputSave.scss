@@ -16,6 +16,7 @@
     box-shadow: 0 1px 15px -7.5px #000000;
     font-size: 16px;
     text-align: center;
+    cursor: url("../../assets/input.svg"), text;
   }
 
   .button {
@@ -30,6 +31,7 @@
       #fff;
     background-size: 10px, 100%;
     box-shadow: 2px 2px #000;
+    cursor: url("../../assets/hoverCursor.svg"), pointer;
 
     &:active {
       box-shadow: none;

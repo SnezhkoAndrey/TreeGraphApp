@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: move;
+  cursor: url("../../assets/drag2.svg"), move;
   z-index: 1;
   width: fit-content;
   margin: 0 auto;
