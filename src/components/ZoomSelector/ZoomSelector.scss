@@ -1,0 +1,52 @@
+.selector {
+  .button {
+    position: relative;
+    font-family: "Dekko", sans-serif;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 10px;
+    border: 3px solid #000;
+    height: 45px;
+    width: 70px;
+    background: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="rotate(25)" opacity="0.2" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g  fill="%23250E17"><circle cx="25" cy="25" r="12.5"/><circle cx="75" cy="75" r="12.5"/><circle cx="75" cy="25" r="12.5"/><circle cx="25" cy="75" r="12.5"/></g></svg>'),
+      #fff;
+    background-size: 10px, 100%;
+    box-shadow: 2px 2px #000;
+
+    &.active {
+      box-shadow: none;
+      transform: translate(2px, 2px);
+    }
+  }
+
+  .selectItems {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border: 3px solid #000;
+    border-radius: 10px;
+    background: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="rotate(25)" opacity="0.2" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g  fill="%23250E17"><circle cx="25" cy="25" r="12.5"/><circle cx="75" cy="75" r="12.5"/><circle cx="75" cy="25" r="12.5"/><circle cx="25" cy="75" r="12.5"/></g></svg>'),
+      #fff;
+    background-size: 10px, 100%;
+
+    .item {
+      font-family: "Dekko", sans-serif;
+      font-size: 16px;
+      padding: 5px;
+      background: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="rotate(25)" opacity="0.2" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g  fill="%23250E17"><circle cx="25" cy="25" r="12.5"/><circle cx="75" cy="75" r="12.5"/><circle cx="75" cy="25" r="12.5"/><circle cx="25" cy="75" r="12.5"/></g></svg>'),
+        #fff;
+      background-size: 10px, 100%;
+      border: none;
+      border-bottom: 2px solid #000;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

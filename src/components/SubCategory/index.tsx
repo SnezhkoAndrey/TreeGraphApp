@@ -1,6 +1,9 @@
 import { useState } from "react";
 import InputSave from "../InputSave";
 import "./SubCategory.scss";
+import Plus from "../../assets/plus2.svg";
+import Delete from "../../assets/deleteWolverine.svg";
+import Edit from "../../assets/editPencil2.svg";
 
 const SubCategory = ({
   name,
@@ -33,14 +36,14 @@ const SubCategory = ({
   return (
     <div className="subCategory">
       <h3 className="title">{name}</h3>
-      <button className="button" onClick={() => viewCategory(true)}>
-        +
+      <button className="button add" onClick={() => viewCategory(true)}>
+        <img className="logoButton" src={Plus} alt="plus" />
       </button>
-      <button className="button" onClick={() => removeCategory(id)}>
-        -
+      <button className="button edit" onClick={() => setEditMode(true)}>
+        <img className="logoButton" src={Edit} alt="edit" />
       </button>
-      <button className="button" onClick={() => setEditMode(true)}>
-        /
+      <button className="button delete" onClick={() => removeCategory(id)}>
+        <img className="logoButton" src={Delete} alt="delete" />
       </button>
     </div>
   );

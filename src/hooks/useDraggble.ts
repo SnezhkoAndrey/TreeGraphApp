@@ -60,6 +60,18 @@ export const useDraggable = ({ onDrag = id }: UseDraggableOptions = {}) => {
     }
   }, []);
 
+  const handleReset = useCallback(() => {
+    if (ref.current) {
+      const elem = ref.current;
+      elem.style.transform = "translate(0, 0)";
+      elem.style.transition = "all 0.5s ease-out";
+      position.current = onDrag({
+        x: 0,
+        y: 0,
+      });
+    }
+  }, []);
+
   const legacyRef = useCallback(
     (elem: HTMLDivElement | null) => {
       ref.current = elem;
@@ -89,6 +101,7 @@ export const useDraggable = ({ onDrag = id }: UseDraggableOptions = {}) => {
           y: pos.y + event.movementY,
         });
         elem.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+        elem.style.transition = "all 0s";
       });
 
       document.addEventListener("mousemove", handleMouseMove);
@@ -102,5 +115,5 @@ export const useDraggable = ({ onDrag = id }: UseDraggableOptions = {}) => {
     }
   }, [pressed, handleMouseMove, handleMouseUp, onDrag]);
 
-  return [legacyRef, pressed] as const;
+  return { legacyRef, handleReset };
 };
