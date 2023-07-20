@@ -1,16 +1,59 @@
+.lineTop {
+  position: absolute;
+  top: 0;
+  height: 15px;
+  border-top: 3px solid #000;
+
+  &.left {
+    right: Calc(50% + 60px);
+    left: -15px;
+  }
+
+  &.right {
+    left: Calc(50% - 60px);
+    right: -15px;
+  }
+
+  &.none {
+    display: none;
+  }
+}
+
 .subCategory {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 
   .title {
+    width: 150px;
     padding: 3px 10px;
+    margin-right: 5px;
     border: 3px solid #000;
     box-shadow: 3px 3px #000;
     background: url('data:image/svg+xml;utf8,<svg width="100" height="100" transform="rotate(25)" opacity="0.3" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g  fill="%23d68810"><circle cx="25" cy="25" r="12.5"/><circle cx="75" cy="75" r="12.5"/><circle cx="75" cy="25" r="12.5"/><circle cx="25" cy="75" r="12.5"/></g></svg>'),
       #ffcd28;
     background-size: 13px, 100%;
-    font-size: 24px;
+    font-size: 20px;
+    position: relative;
+
+    .line {
+      height: 2px;
+      width: 20px;
+      background-color: #000;
+      position: absolute;
+      transform: rotate(0.25turn);
+
+      &.top {
+        left: Calc(50% - 5px);
+        top: -10px;
+        width: 15px;
+      }
+
+      &.bottom {
+        left: Calc(50% - 7px);
+        bottom: -15px;
+      }
+    }
   }
 
   .button {

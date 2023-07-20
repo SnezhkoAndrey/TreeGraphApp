@@ -10,23 +10,30 @@ interface PropsType extends CategoryType {
   removeCategory: (id: number) => void;
   isInputView: boolean;
   removeView?: (isView: boolean) => void;
+  itsFirst?: boolean;
+  itsLast?: boolean;
 }
 
 const Category = ({
   name,
   id,
   nodes,
+  parentId,
   addCategory,
   editCategory,
   removeCategory,
   isInputView,
   removeView,
+  itsFirst,
+  itsLast,
 }: PropsType) => {
   const [view, setView] = useState(false);
 
   const viewCategory = (isView: boolean) => {
     setView(isView);
   };
+
+  const lastEl = nodes.length - 2;
 
   if (!name && isInputView)
     return (
@@ -44,17 +51,22 @@ const Category = ({
   return (
     <div className="category">
       {name ? (
-        <div className={"item"}>
+        <div className="item">
           <SubCategory
             name={name}
             id={id}
+            nodes={nodes}
+            parentId={parentId}
             removeCategory={removeCategory}
             editCategory={editCategory}
             viewCategory={viewCategory}
+            itsFirst={itsFirst}
+            itsLast={itsLast}
           />
+
           {!!nodes.length && (
             <div className="categoryList">
-              {nodes.map((c) => (
+              {nodes.map((c, index) => (
                 <Category
                   key={c.id}
                   {...c}
@@ -63,6 +75,8 @@ const Category = ({
                   removeCategory={removeCategory}
                   isInputView={view}
                   removeView={viewCategory}
+                  itsFirst={index === 0}
+                  itsLast={index === lastEl}
                 />
               ))}
             </div>
